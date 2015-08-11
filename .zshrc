@@ -11,9 +11,12 @@ antigen bundle git
 antigen bundle git-flow-avh
 antigen bundle pip
 antigen bundle vagrant
+antigen bundle gem
 antigen bundle npm
+antigen bundle composer
 antigen bundle command-not-found
 antigen bundle nojhan/liquidprompt --branch=develop
+antigen bundle go
 
 # Syntax highlighting bundle.
 antigen bundle zsh-users/zsh-syntax-highlighting
@@ -25,7 +28,7 @@ antigen apply
 # http://superuser.com/questions/306028/tmux-and-zsh-custom-prompt-bug-with-window-name
 DISABLE_AUTO_TITLE=true
 
-export PATH=~/bin:$PATH
+export PATH=~/bin:~/.local/bin:$PATH
 
 eval `dircolors ~/.dircolors`
 
@@ -40,6 +43,10 @@ export LESS_TERMCAP_us=$'\E[04;38;5;146m' # begin underline
 
 # aliases
 alias ack=ack-grep
+# alias tmux='TERM=screen-256color-bce tmux'
 
 # rvm
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
+# no cows for ansible
+export ANSIBLE_NOCOWS=1
