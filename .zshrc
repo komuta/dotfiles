@@ -1,52 +1,42 @@
-# For benchmarks
-# zmodload zsh/zprof
 
-source ~/.dotfiles/antigen/antigen.zsh
+### Added by Zplugin's installer
+source "$HOME/.zplugin/bin/zplugin.zsh"
+autoload -Uz _zplugin
+(( ${+_comps} )) && _comps[zplugin]=_zplugin
+### End of Zplugin installer's chunk
 
-# Load the oh-my-zsh's library.
-antigen use oh-my-zsh
+zplugin light zsh-users/zsh-autosuggestions
+zplugin light zdharma/fast-syntax-highlighting
+zplugin light Tarrasch/zsh-autoenv
 
-# Bundles from the default repo (robbyrussell's oh-my-zsh).
-antigen bundle git
-antigen bundle git-flow-avh
-antigen bundle pip
-antigen bundle vagrant
-antigen bundle gem
-antigen bundle npm
-antigen bundle composer
-antigen bundle command-not-found
-antigen bundle nojhan/liquidprompt --branch=develop
-antigen bundle go
+zplugin ice depth=1
+zplugin light romkatv/powerlevel10k
 
-# Syntax highlighting bundle.
-antigen bundle zsh-users/zsh-syntax-highlighting
+# TODO try migrating to https://github.com/sorin-ionescu/prezto?
+# zplugin snippet PZT::modules/helper/init.zsh
 
-# Tell antigen that you're done.
-antigen apply
+zplugin ice atload"unalias grv"
+zplugin snippet OMZ::plugins/git/git.plugin.zsh
+zplugin snippet OMZ::lib/completion.zsh
+zplugin snippet OMZ::lib/directories.zsh
+zplugin snippet OMZ::lib/history.zsh
+zplugin snippet OMZ::lib/key-bindings.zsh
+zplugin snippet OMZ::lib/theme-and-appearance.zsh
+zplugin ice wait lucid
+zplugin snippet OMZ::plugins/history-substring-search/history-substring-search.zsh
+zplugin ice wait lucid
+zplugin snippet OMZ::plugins/colored-man-pages/colored-man-pages.plugin.zsh
+UNBUNDLED_COMMANDS=(guard pry)
+zplugin snippet OMZ::plugins/bundler/bundler.plugin.zsh
 
-# Avoid zsh interferences with screen/tmux window naming policy
-# http://superuser.com/questions/306028/tmux-and-zsh-custom-prompt-bug-with-window-name
-DISABLE_AUTO_TITLE=true
+zplugin ice wait lucid
+zplugin snippet OMZ::plugins/fzf/fzf.plugin.zsh
 
-export PATH=~/bin:~/.local/bin:$PATH
+autoload -Uz compinit
+compinit
 
-eval `dircolors ~/.dircolors`
+# local customizations
+[[ -d ~/.zshrc.d ]] && for file in ~/.zshrc.d/*; do source $file; done
 
-# Less Colors for Man Pages
-export LESS_TERMCAP_mb=$'\E[01;31m'       # begin blinking
-export LESS_TERMCAP_md=$'\E[01;38;5;74m'  # begin bold
-export LESS_TERMCAP_me=$'\E[0m'           # end mode
-export LESS_TERMCAP_se=$'\E[0m'           # end standout-mode
-export LESS_TERMCAP_so=$'\E[38;5;246m'    # begin standout-mode - info box
-export LESS_TERMCAP_ue=$'\E[0m'           # end underline
-export LESS_TERMCAP_us=$'\E[04;38;5;146m' # begin underline
-
-# aliases
-alias ack=ack-grep
-# alias tmux='TERM=screen-256color-bce tmux'
-
-# rvm
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-
-# no cows for ansible
-export ANSIBLE_NOCOWS=1
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
